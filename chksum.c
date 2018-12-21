@@ -1,9 +1,7 @@
 // Copyright MIT License (c) 2018
-// Marcel Bobolz <ergotamin@e-p-s.org>
+// Marcel Bobolz <ergotamin.source@gmail.com>
 
-#include "cstd.h"
-
-__BEGIN_CSTD
+__BEGIN_DECL
 
 #define MD5_DIGEST_LENGTH       16
 
@@ -352,4 +350,4 @@ int md5_final(unsigned char *md, MD5_CTX *c)
     return 1;
 }
 
-__END_CSTD
+__END_DECL

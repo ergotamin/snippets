@@ -1,9 +1,7 @@
 // Copyright MIT License (c) 2018
-// Marcel Bobolz <ergotamin@e-p-s.org>
+// Marcel Bobolz <ergotamin.source@gmail.com>
 
-#include "cstd.h"
-
-__BEGIN_CSTD
+__BEGIN_DECL
 
 unsigned int chk(void *addr32, unsigned int bit)
 {
@@ -30,4 +28,4 @@ void b2b(void *addr32, unsigned int from, int to)
     *((unsigned int *)addr32) ^= (-to & *((unsigned int *)addr32)) & (1 << from);
 }
 
-__END_CSTD
+__END_DECL

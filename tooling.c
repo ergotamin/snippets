@@ -1,37 +1,9 @@
 // Copyright MIT License (c) 2018
-// Marcel Bobolz <ergotamin@e-p-s.org>
+// Marcel Bobolz <ergotamin.source@gmail.com>
 
-#include "cstd.h"
-
-__BEGIN_CSTD
+__BEGIN_DECL
 
 extern const char *__progname;
-
-void proginfo(char *desc)
-{
-    cprint(bold()                                     \
-           "\n\t"                                     \
-           smul()                                     \
-           fg("0", "225", "50")                       \
-           "'%s':\n"                                  \
-           sgr()                                      \
-           bold()                                     \
-           "\tAuthor:\n"                              \
-           fg("40", "255", "40")                      \
-           "\t\t"AUTHORNAME "\n\t\t"AUTHORMAIL "\n\n" \
-           sgr()                                      \
-           bold()                                     \
-           "\tDescription:\n"                         \
-           sitm()                                     \
-           "\t\t" "%s"                                \
-           sgr()                                      \
-           "\n\n\t\t\t\t"                             \
-           fg("0", "255", "125")                      \
-           ""LICENSE "\n"                             \
-           sgr(),                                     \
-           __progname,                                \
-           desc);
-}
 
 void *nop(void)
 {
@@ -59,4 +31,4 @@ int sysspawn(const char *fmt, ...)
     else return FAILURE;
 }
 
-__END_CSTD
+__END_DECL

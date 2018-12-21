@@ -1,36 +1,67 @@
 // Copyright MIT License (c) 2018
-// Marcel Bobolz <ergotamin@e-p-s.org>
+// Marcel Bobolz <ergotamin.source@gmail.com>
 
-#include "cstd.h"
+__BEGIN_DECL
 
-__BEGIN_CSTD
+#define notnull(pointer) \
+    (((void *)pointer) != (NULL) ? (1 > 0) : (1 < 0))
+
+void *clean(unsigned int c)
+{
+    const char rosec[c] __attribute__((section(".rodata")));
+
+    asm volatile ("mfence" : : : "memory");
+    __sync_synchronize();
+
+    memset((void *)rosec, '\0', c);
+
+    return (void *)&rosec;
+}
+
+unsigned short prandid(void)
+{
+    int32_t partial = 0x008000;
+    int32_t useable = 0x7FFF7FFF;
+    int32_t id = 0x7FFFFFFF;
+    uint64_t nseed = 0;
+    struct timespec ts;
+
+    clock_gettime(CLOCK_REALTIME, &ts);
+    nseed = (uint64_t)ts.tv_sec * 0x3B9ACA00UL + (uint64_t)ts.tv_nsec;
+    srand(nseed);
+
+    do
+        id = rand();
+    while (id > useable);
+    return (unsigned short)(id / partial);
+}
 
 int shellexec(const char *cmd, char *output)
 {
     FILE *p = popen(cmd, "r");
-    char ch[kilobyte(4)] = clean();
+    char ch[4096] = (char *)clean(4096);
 
     int _lib_reading(void)
     {
         do
-            fread_unlocked(ch, kilobyte(4), 1, p);
+            fread_unlocked(ch, 4096, 1, p);
         while (NULL);
-        return VALID;
+        return 0;
     }
 
-    int r = SUCCESS;
+    int r = 0;
 
-    (notnull(p) && (_lib_reading() == VALID))
-    ? (r = SUCCESS)
-    : (r = FAILURE);
+    (notnull(p) && (_lib_reading() == 0))
+    ? (r = 0)
+    : (r = 1);
 
     pclose(p);
 
-    if (r == SUCCESS) {
+    if (r == 0) {
         if (notnull(output)) {
-            char *buf = alloc(kilobyte(4));
-            strlcpy(buf, ch, kilobyte(4));
-            strlcpy(output, buf, kilobyte(4));
+            char *buf = alloc(4096);
+            strlcpy(buf, ch, 4096);
+            strlcpy(output, buf, 4096);
             memfree(buf);
         }
         return r;
@@ -41,16 +72,16 @@ int shellexec(const char *cmd, char *output)
 
 int daemonize(void)
 {
-    int fdmax = kilobyte(1);
-    pid_t pid = fork();
+    int fdmax = (1UL << 10);
+    unsigned int pid = fork();
 
-    if (pid != 0) return SUCCESS;
+    if (pid != 0) return 0;
 
-    (setsid() < 0) ? exit(ERROR) : assert(1);
+    (setsid() < 0) ? exit(-1) : assert(1);
 
     pid = fork();
 
-    (pid != 0) ? exit(SUCCESS) : assert(1);
+    (pid != 0) ? exit(0) : assert(1);
 
     umask(000);
     chdir("/");
@@ -59,9 +90,9 @@ int daemonize(void)
 
     pid = fork();
 
-    (pid != 0) ? exit(SUCCESS) : assert(1);
+    (pid != 0) ? exit(0) : assert(1);
 
-    return TRUE;
+    return 1;
 }
 
 void childexecv(char **args)
@@ -108,4 +139,4 @@ void hmb(void)
     __sync_synchronize();
 }
 
-__END_CSTD
+__END_DECL

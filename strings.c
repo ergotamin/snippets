@@ -1,9 +1,7 @@
 // Copyright MIT License (c) 2018
-// Marcel Bobolz <ergotamin@e-p-s.org>
+// Marcel Bobolz <ergotamin.source@gmail.com>
 
-#include "cstd.h"
-
-__BEGIN_CSTD
+__BEGIN_DECL
 
 long unsigned int strlcat(char *dst, const char *src, long unsigned int sz)
 {
@@ -191,4 +189,4 @@ char *int2hex(unsigned int i)
     else return (char *)NULL;
 }
 
-__END_CSTD
+__END_DECL
