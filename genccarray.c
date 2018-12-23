@@ -14,16 +14,16 @@ int main(int argc, char **argv)
         char buf[1024];
         void *ret = NULL;
         char *tr = 0;
-        fprintf(stdout, "static std::Array<std::string>%s = {\n", *argv);
+        fprintf(stdout, "static std::Array<std::string,/*LENGTH*/>%s = {\n", *argv);
         do {
-            memset(buf, 0, 1024);
+            memset(buf, 0, strlen(buf));
             ret = fgets(buf, 1024, f);
             if (NULL != ret) {
                 tr = strrchr(buf, '\n');
                 *tr = 0;
                 fprintf(stdout, "\t\"%s\", \\\n", buf);
             } else {
-                fprintf(stdout, "\tnullptr\n};\n// reached end-of-file.");
+                fprintf(stdout, "\n};\n// end-of-file.");
                 fflush(f);
                 fclose(f);
                 return EXIT_SUCCESS;
