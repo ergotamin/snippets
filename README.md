@@ -1,5 +1,3 @@
-
-
 <style type="text/css"> table, th, td { border: 1px dashed grey;
 border-collapse:collapse; width: 100%; } </style>
 
@@ -7,8 +5,8 @@ border-collapse:collapse; width: 100%; } </style>
 
 ##### `c sources for various usecases`
 
- ----
+---
 
-<em> [see the license](/LICENSE.md). </em>
+<em> [see the license](/LICENSE). </em>
 
- ----
+---
