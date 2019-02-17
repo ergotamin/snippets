@@ -3,7 +3,7 @@ border-collapse:collapse; width: 100%; } </style>
 
 ## _C-Snippets:_
 
-##### `c sources for various usecases`
+##### `c/c++ snippet collection`
 
 ---
 
