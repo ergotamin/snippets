@@ -1,8 +1,6 @@
 // Copyright MIT License (c) 2018
 // Marcel Bobolz <ergotamin.source@gmail.com>
 
-__BEGIN_DECL
-
 long unsigned int strlcat(char *dst, const char *src, long unsigned int sz)
 {
     const char *offdst = dst;
