@@ -58,10 +58,6 @@ __syscall:
 #define __builtin_close(fd) \
     __syscall(3L, (unsigned int)fd)
 
-
-
-
-
 // ```
 // wrapper function for
 // ``` [*`sys_syncfs`*](syscall[306])
