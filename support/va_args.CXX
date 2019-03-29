@@ -24,3 +24,32 @@ unsigned int va_args_fn(int first, int last, ...)
     va_end(args);
     return last;
 }
+//
+unsigned int get_opt(const char *arg, int num, ...)
+{
+    va_list args;
+    int r = -1;
+    char *def = NULL;
+    unsigned int opt = 0;
+
+    va_start(args, num);
+    ;
+    for (--num; 0 <= num; num--) {
+        ++opt;
+        def = __builtin_strdup(va_arg(args, const char *));
+
+        r = __builtin_strcmp(arg, def);
+        __builtin_free((void *)def);
+        def = NULL;
+
+        if (0 == r)
+            break;
+    }
+    ;
+    va_end(args);
+    ;
+    if (num == -1)
+        return (unsigned int)num;
+    else
+        return opt;
+}
